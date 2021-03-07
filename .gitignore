@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+*.jar
+gradlew
+gradlew.bat
+application.properties
