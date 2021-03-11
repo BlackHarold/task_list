@@ -2,6 +2,7 @@ package home.blackharold.tasklist.controller;
 
 import home.blackharold.tasklist.entity.Priority;
 import home.blackharold.tasklist.repo.PriorityRepository;
+import home.blackharold.tasklist.search.PrioritySearchValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,5 +68,10 @@ public class PriorityController {
             return new ResponseEntity("wrong id: " + id, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok("object with id: " + id + " deleted");
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Priority>> findAllByColor(@RequestBody PrioritySearchValues prioritySearchValues) {
+        return ResponseEntity.ok(priorityRepository.findByColor(prioritySearchValues.getTitle(), prioritySearchValues.getColor()));
     }
 }

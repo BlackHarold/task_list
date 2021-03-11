@@ -1,9 +1,8 @@
 package home.blackharold.tasklist.controller;
 
 import home.blackharold.tasklist.entity.Category;
-import home.blackharold.tasklist.entity.Category;
-import home.blackharold.tasklist.entity.Priority;
 import home.blackharold.tasklist.repo.CategoryRepository;
+import home.blackharold.tasklist.search.CategorySearchValues;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +24,11 @@ public class CategoryController {
     @GetMapping("/list")
     public List<Category> test() {
         return categoryRepository.findAll();
+    }
+
+    @GetMapping("/all")
+    public List<Category> findAll() {
+        return categoryRepository.findAllByOrderByTitleAsc();
     }
 
     @PostMapping("/add")
@@ -56,5 +60,10 @@ public class CategoryController {
             return new ResponseEntity("No such element", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(category);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Category>> search(@RequestBody CategorySearchValues categorySearchValues) {
+        return ResponseEntity.ok(categoryRepository.findByTitle(categorySearchValues.getText()));
     }
 }
